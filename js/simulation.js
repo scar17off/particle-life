@@ -154,6 +154,10 @@ class Simulation {
             if (particle.type === 13) {
                 Effects.quantumEntanglement(this.ctx, particle);
             }
+
+            if (particle.type === 14 && particle.atomActive) {
+                Effects.atom(this.ctx, particle);
+            }
         }
     }
 }

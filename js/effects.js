@@ -180,4 +180,45 @@ class Effects {
         ctx.fillStyle = 'rgba(255, 0, 255, 0.8)';
         ctx.fill();
     }
+
+    static atom(ctx, particle) {
+        if (!particle.atomActive) return;
+
+        const radius = CONFIG.atomRadius * particle.atomProgress;
+        
+        // Draw the outer circle
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, radius, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(0, 255, 0, 0.5)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Draw the electron orbits
+        for (let i = 0; i < 3; i++) {
+            ctx.beginPath();
+            ctx.ellipse(
+                particle.x, particle.y,
+                radius * 0.8, radius * 0.5,
+                i * Math.PI / 3 + particle.atomAngle, 0, Math.PI * 2
+            );
+            ctx.strokeStyle = 'rgba(0, 200, 255, 0.7)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Draw the electron
+            const electronAngle = particle.atomAngle + i * (Math.PI * 2 / 3);
+            const electronX = particle.x + Math.cos(electronAngle) * radius * 0.8;
+            const electronY = particle.y + Math.sin(electronAngle) * radius * 0.5;
+            ctx.beginPath();
+            ctx.arc(electronX, electronY, 3, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(0, 200, 255, 1)';
+            ctx.fill();
+        }
+
+        // Draw the nucleus
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 100, 100, 1)';
+        ctx.fill();
+    }
 }

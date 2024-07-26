@@ -19,6 +19,9 @@ class Particle {
         this.supernovaInterval = null;
         this.timeWarpActive = false;
         this.entangledParticle = null;
+        this.atomActive = false;
+        this.atomProgress = 0;
+        this.atomAngle = 0;
     }
 
     setPosition(x, y) {
@@ -79,6 +82,7 @@ class Particle {
             case 11: this.supernova(particles); break;
             case 12: this.timeWarp(particles); break;
             case 13: this.quantumEntanglement(particles); break;
+            case 14: this.createAtom(particles); break;
         }
     }
 
@@ -243,6 +247,24 @@ class Particle {
                 target.entangledParticle = null;
             }, 5000);
         }
+    }
+
+    createAtom(particles) {
+        this.atomActive = true;
+        this.atomProgress = 0;
+        const interval = setInterval(() => {
+            this.atomProgress += 0.02;
+            this.atomAngle += 0.1;
+            if (this.atomProgress >= 1) {
+                clearInterval(interval);
+                this.atomActive = false;
+            }
+            particles.forEach(p => {
+                if (p !== this && p.isAlive && this.distanceTo(p) <= CONFIG.atomRadius) {
+                    p.takeDamage(CONFIG.atomDamage);
+                }
+            });
+        }, 50);
     }
 
     takeDamage(amount) {
