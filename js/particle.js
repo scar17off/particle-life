@@ -22,6 +22,9 @@ class Particle {
         this.atomActive = false;
         this.atomProgress = 0;
         this.atomAngle = 0;
+        this.radiationActive = false;
+        this.radiationProgress = 0;
+        this.radiationAngle = 0;
     }
 
     setPosition(x, y) {
@@ -83,6 +86,7 @@ class Particle {
             case 12: this.timeWarp(particles); break;
             case 13: this.quantumEntanglement(particles); break;
             case 14: this.createAtom(particles); break;
+            case 15: this.createRadiation(particles); break;
         }
     }
 
@@ -265,6 +269,36 @@ class Particle {
                 }
             });
         }, 50);
+    }
+
+    createRadiation(particles) {
+        this.radiationActive = true;
+        this.radiationProgress = 0;
+        const interval = setInterval(() => {
+            this.radiationProgress += 0.01;
+            this.radiationAngle += 0.05;
+            if (this.radiationProgress >= 1) {
+                clearInterval(interval);
+                this.radiationActive = false;
+            }
+            particles.forEach(p => {
+                if (p !== this && p.isAlive && this.distanceTo(p) <= CONFIG.radiationRadius) {
+                    p.applyRadiationEffect();
+                }
+            });
+        }, 50);
+    }
+
+    applyRadiationEffect() {
+        if (!this.radiationEffect) {
+            this.radiationEffect = true;
+            this.originalDamageAmount = CONFIG.damageAmount;
+            setTimeout(() => {
+                this.radiationEffect = false;
+                CONFIG.damageAmount = this.originalDamageAmount;
+            }, CONFIG.radiationDuration);
+        }
+        CONFIG.damageAmount *= CONFIG.radiationDamageReduction;
     }
 
     takeDamage(amount) {

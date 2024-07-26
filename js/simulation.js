@@ -158,6 +158,10 @@ class Simulation {
             if (particle.type === 14 && particle.atomActive) {
                 Effects.atom(this.ctx, particle);
             }
+
+            if (particle.type === 15 && particle.radiationActive) {
+                Effects.radiation(this.ctx, particle);
+            }
         }
     }
 }

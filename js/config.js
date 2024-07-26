@@ -1,6 +1,6 @@
 const CONFIG = {
     particleCount: 300,
-    particleTypes: 15,
+    particleTypes: 16,
     maxForce: 1,
     maxSpeed: 2,
     interactionRadius: 50,
@@ -20,7 +20,10 @@ const CONFIG = {
         [0, 0, 0, 0, 0, 0, 0, 0, -1, -0.5, 0.5, -0.8, 1, 0.5, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0.5, -0.5, 0.8, -0.5, 0.5, -0.5, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5],
-        [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -1]
+        [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0],
+        [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -1, 0.5],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, -1]
     ],
     magicCooldown: 200,
     combatRange: 30,
@@ -32,5 +35,8 @@ const CONFIG = {
     particleMaxSize: 8,
     atomRadius: 50,
     atomDamage: 0.5,
-    atomDuration: 5000
+    atomDuration: 5000,
+    radiationRadius: 80,
+    radiationDuration: 8000,
+    radiationDamageReduction: 0.5
 };

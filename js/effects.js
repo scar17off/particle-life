@@ -221,4 +221,45 @@ class Effects {
         ctx.fillStyle = 'rgba(255, 100, 100, 1)';
         ctx.fill();
     }
+
+    static radiation(ctx, particle) {
+        if (!particle.radiationActive) return;
+
+        const radius = CONFIG.radiationRadius * particle.radiationProgress;
+        
+        // Draw the outer circle
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, radius, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(0, 255, 0, 0.5)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Draw the radiation symbol
+        const symbolRadius = radius * 0.6;
+        const centerX = particle.x;
+        const centerY = particle.y;
+
+        // Draw the center circle
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, symbolRadius * 0.2, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0, 255, 0, 0.7)';
+        ctx.fill();
+
+        // Draw the three "blades"
+        for (let i = 0; i < 3; i++) {
+            const angle = (i * 2 * Math.PI / 3) + particle.radiationAngle;
+            const startX = centerX + Math.cos(angle) * symbolRadius * 0.3;
+            const startY = centerY + Math.sin(angle) * symbolRadius * 0.3;
+            const endX = centerX + Math.cos(angle) * symbolRadius;
+            const endY = centerY + Math.sin(angle) * symbolRadius;
+
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
+            ctx.lineWidth = symbolRadius * 0.2;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = 'rgba(0, 255, 0, 0.7)';
+            ctx.stroke();
+        }
+    }
 }
